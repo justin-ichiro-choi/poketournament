@@ -1,0 +1,46 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<header>
+    <h1>Enter your trainer info here!</h1>
+</header>
+
+<p>Information on our <strong>tournament matches</strong> is here!</p>
+
+<h2>Search Using Our Datadex</h2>
+
+{{!-- Create a table --}}
+<table id="matches-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>Delete</th>
+
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print trainer table info in order --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.trainerID}}</td>
+            <td>{{this.trainerName}}</td>
+            <td>{{this.trainerPhone}}</td>
+            <td>{{this.trainerEmail}}</td>
+            <td>{{this.numberOfWins}}</td>
+            <td><button onclick="deleteTrainer({{this.trainerID}})">Delete</button></td>
+
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
