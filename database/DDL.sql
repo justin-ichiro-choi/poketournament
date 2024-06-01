@@ -1,4 +1,3 @@
-SET FOREIGN_KEY_CHECKS=0;
 
 -- Trainers
 -- trainerID: int, not NULL, PK, auto_increment, 

@@ -39,6 +39,38 @@ app.get('/', function(req, res)
         })                                                      // an object where 'data' is equal to the 'rows' we
     });                                               // received back from the query
 
+app.get('/matches', function(req, res)
+{  
+    let query1;               // Define our query
+    
+    if (req.query.match === undefined)
+    {
+        query1 = "SELECT Matches.matchID, Matches.roundNumber, Matches.contestant1, Matches.contestant2, p1.trainerName as trainer1, p2.trainerName as trainer2 FROM Matches JOIN Trainers p1 on Matches.contestant1 = p1.trainerID JOIN Trainers p2 on Matches.contestant2 = p2.trainerID;"
+    }
+    // If there is a query string, we assume this is a search, and return desired results
+    else
+    {
+        query1 = `SELECT * FROM Matches WHERE matchID LIKE "${req.query.trainerName}%"`
+    }
+
+    let query2;
+
+    query2 = "SELECT * FROM Trainers;";
+    
+    db.pool.query(query1, function(error, rows, fields){    // Execute the query
+        let matches = rows;
+        
+        db.pool.query(query2, (error, rows, fields) => {
+            
+            // Save the planets
+            let trainerNames = rows;
+            return res.render('matches', {data: matches, trainer: trainerNames});
+        })
+    })
+});                                               // received back from the query
+
+
+
 // app.js - ROUTES section
 
 app.post('/add-trainer-form-ajax', function(req, res) 
@@ -79,6 +111,44 @@ app.post('/add-trainer-form-ajax', function(req, res)
     })
 });
 
+app.post('/add-match-form-ajax', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Matches (roundNumber, contestant1, contestant2) VALUES ('${data.roundNumber}', '${data.contestant1}', ${data.contestant2})`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            // If there was no error, perform a SELECT * on bsg_people
+            query2 = `SELECT * FROM Matches;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
 app.delete('/delete-trainer-ajax/', function(req,res,next){
     let data = req.body;
     let trainerID = parseInt(data.id);

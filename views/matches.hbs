@@ -1,14 +1,13 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <header>
-    <h1>Enter your trainer info here!</h1>
+    <h1>Enter your matches info here!</h1>
 </header>
 
 <p>Information on our <strong>tournament matches</strong> is here!</p>
 
 <h2>Search Using Our Datadex</h2>
 
-{{!-- Create a table --}}
 <table id="matches-table">
 
     {{!-- Header section --}}
@@ -33,14 +32,45 @@
         {{!-- For each row, print trainer table info in order --}}
         {{#each data}}
         <tr>
-            <td>{{this.trainerID}}</td>
-            <td>{{this.trainerName}}</td>
-            <td>{{this.trainerPhone}}</td>
-            <td>{{this.trainerEmail}}</td>
-            <td>{{this.numberOfWins}}</td>
-            <td><button onclick="deleteTrainer({{this.trainerID}})">Delete</button></td>
+            <td>{{this.matchID}}</td>
+            <td>{{this.roundNumber}}</td>
+            <td>{{this.trainer1}}</td>
+            <td>{{this.trainer2}}</td>
+
+            <td><button onclick="deleteTrainer({{this.matchID}})">Delete</button></td>
 
         </tr>
         {{/each}}
     </tbody>
 </table>
+<script src="./js/delete_trainer.js"></script>
+
+{{!-- Form to add a record to the table  --}}
+<p>To add a new person, please enter their information below and click 'Submit'!</p>
+<form id="add-match-form-ajax">
+
+    <label for="input-round-number">Round Number: </label>
+    <input type="number" name="input-round-number" id="input-round-number">
+
+
+    <label for="input-contestant-1">Trainer Name: </label>
+    <select name="input-contestant-1" id="input-contestant-1">
+        <option value="test">Select a Trainer</option>
+        {{#each trainer}}
+        <option value="{{this.trainerID}}">{{this.trainerName}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-contestant-2">Trainer Name: </label>
+    <select name="input-contestant-2" id="input-contestant-2">
+        <option value="test">Select a Trainer</option>
+        {{#each trainer}}
+        <option value="{{this.trainerID}}">{{this.trainerName}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit">
+</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_match.js"></script>

@@ -1,30 +1,24 @@
 // Get the objects we need to modify
-let addTrainerForm = document.getElementById('add-trainer-form-ajax');
+let addMatchForm = document.getElementById('add-match-form-ajax');
 
 // Modify the objects we need
-addTrainerForm.addEventListener("submit", function (e) {
+addMatchForm.addEventListener("submit", function (e) {
     
     // Prevent the form from submitting
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputTrainerName = document.getElementById("input-trainer-name");
-    let inputTrainerPhone = document.getElementById("input-trainer-phone");
-    let inputTrainerEmail = document.getElementById("input-trainer-email");
-    let inputNumberOfWins = document.getElementById("input-trainer-number-of-wins");
+    let roundNumberValue = document.getElementById("input-round-number").value;
+    let contestant1Value = document.getElementById("input-contestant-1").value;
+    let contestant2Value = document.getElementById("input-contestant-2").value;
 
-    // Get the values from the form fields
-    let trainerNameValue = inputTrainerName.value;
-    let trainerPhoneValue = inputTrainerPhone.value;
-    let trainerEmailValue = inputTrainerEmail.value;
-    let trainerNumberOfWins = inputNumberOfWins.value;
     // Put our data we want to send in a javascript object
     let data = {
-        name: trainerNameValue,
-        phoneNumber: trainerPhoneValue,
-        email: trainerEmailValue,
-        numberOfWins: trainerNumberOfWins
+        roundNumber: roundNumberValue,
+        contestant1: contestant1Value,
+        contestant2: contestant2Value
     }
+    console.log(data)
     
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
@@ -34,7 +28,7 @@ addTrainerForm.addEventListener("submit", function (e) {
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-            console.log(xhttp.response);
+
             // Add the new data to the table
             addRowToTable(xhttp.response);
 
@@ -67,7 +61,6 @@ addRowToTable = (data) => {
 
     // Get a reference to the new row from the database query (last object)
     let parsedData = JSON.parse(data);
-    console.log(parsedData);
     let newRow = parsedData[parsedData.length - 1]
 
     // Create a row and 4 cells
