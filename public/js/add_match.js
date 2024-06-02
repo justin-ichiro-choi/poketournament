@@ -18,11 +18,10 @@ addMatchForm.addEventListener("submit", function (e) {
         contestant1: contestant1Value,
         contestant2: contestant2Value
     }
-    console.log(data)
-    
+
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/add-trainer-form-ajax", true);
+    xhttp.open("POST", "/add-match-form-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -69,7 +68,6 @@ addRowToTable = (data) => {
     let trainerNameCell = document.createElement("TD");
     let trainerPhoneCell = document.createElement("TD");
     let trainerEmailCell = document.createElement("TD");
-    let trainerNumberOfWinsCell = document.createElement("TD");
 
     let deleteCell = document.createElement("TD");
 

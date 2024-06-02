@@ -83,4 +83,6 @@ function updateRow(data, trainerID){
 
        }
     }
+
+    location.reload();
 }

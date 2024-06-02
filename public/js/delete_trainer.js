@@ -23,4 +23,6 @@ function deleteTrainer(trainerID) {
               break;
          }
       }
+
+      location.reload();
   }
