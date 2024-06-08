@@ -1,0 +1,49 @@
+<header>
+    <h1>Enter your moves here!</h1>
+</header>
+
+<p>Information on our <strong>pokemon you will use</strong> is here!</p>
+
+<h2>Search Using Our Datadex</h2>
+
+<table id="pokemon-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>Delete</th>
+
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print trainer table info in order --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.pokemonID}}</td>
+            <td>{{this.pokemonName}}</td>
+            <td>{{this.pokemonLevel}}</td>
+            <td>{{this.primaryType}}</td>
+            <td>{{this.secondaryType}}</td>
+            <td>{{this.heldItem}}</td>
+            <td>{{this.trainerID}}</td>
+            <td>{{this.movesetID}}</td>
+
+
+            <td><button onclick="deleteTrainer({{this.matchID}})">Delete</button></td>
+
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_move.js"></script>

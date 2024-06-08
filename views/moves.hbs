@@ -1,0 +1,58 @@
+<!-- index.hbs -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<header>
+    <h1>Enter your pokemon moves info here!</h1>
+</header>
+
+<p>Information on our <strong>moves</strong> is here!</p>
+
+<h2>Search Using Our Datadex</h2>
+
+<p>Search by move name using the field below. Partial names are ok as well!</p>
+<form id="search-move-html" method='GET' action='/'>
+    <label for="input-move">Search by Trainer Name: </label>
+    <input type="text" name="moveName" id="input-trainer-html-search">
+    
+    <input type="submit">
+    <a href='/'><button>Reset</button></a>
+</form>
+
+{{!-- Create a table --}}
+<table id="moves-table">
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>Delete</th>
+
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print trainer table info in order --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.moveID}}</td>
+            <td>{{this.moveName}}</td>
+            <td>{{this.moveDescription}}</td>
+            <td>{{this.movePower}}</td>
+            <td>{{this.typeOfMove}}</td>
+
+            <td><button onclick="deleteMove({{this.moveID}})">Delete</button></td>
+
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_move.js"></script>

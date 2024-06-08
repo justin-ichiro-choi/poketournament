@@ -19,7 +19,7 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
 /*
     ROUTES
 */
-app.get('/', function(req, res)
+app.get('/trainers', function(req, res)
 {  
         let query1;               // Define our query
         
@@ -35,7 +35,7 @@ app.get('/', function(req, res)
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
 
-            res.render('index', {data: rows});                  // Render the index.hbs file, and also send the renderer
+            res.render('trainers', {data: rows});                  // Render the index.hbs file, and also send the renderer
         })                                                      // an object where 'data' is equal to the 'rows' we
     });                                               // received back from the query
 
@@ -69,6 +69,30 @@ app.get('/matches', function(req, res)
     })
 });                                               // received back from the query
 
+app.get('/', function(req, res)
+{  
+    return res.render('title');
+});     // HOME PAGE
+
+app.get('/moves', function(req, res)
+{  
+        let query1;               // Define our query
+        
+        if (req.query.trainerName === undefined)
+        {
+            query1 = "SELECT * FROM Moves;";
+        }
+        // If there is a query string, we assume this is a search, and return desired results
+        else
+        {
+            query1 = `SELECT * FROM Moves WHERE moveName LIKE "${req.query.moveName}%"`
+        }
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+
+            res.render('moves', {data: rows});                  // Render the index.hbs file, and also send the renderer
+        })                                                      // an object where 'data' is equal to the 'rows' we
+    });                                               // received back from the query
 
 
 // app.js - ROUTES section

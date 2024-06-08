@@ -17,7 +17,7 @@
   
   /*  ----- Viewport ----- elements inherited by all remaining elements ----- */
   body {       /* Can alternatively define in html {}. */
-    background-image: url(background.jpg);
+    background-image: url(../img/background.jpg);
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -29,7 +29,6 @@
     padding:2%;
     max-width:1250px;
   }
-  
   /*  ----- Page layout blocks -----  */
   header {
     color: var(--dark-blue);
