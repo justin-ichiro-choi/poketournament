@@ -37,7 +37,7 @@ app.get('/trainers', function(req, res)
 
             res.render('trainers', {data: rows});                  // Render the index.hbs file, and also send the renderer
         })                                                      // an object where 'data' is equal to the 'rows' we
-    });                                               // received back from the query
+    });                                               // TRAINERS PAGE + TABLE
 
 app.get('/matches', function(req, res)
 {  
@@ -67,7 +67,7 @@ app.get('/matches', function(req, res)
             return res.render('matches', {data: matches, trainer: trainerNames});
         })
     })
-});                                               // received back from the query
+});                                               // MACHES PAGE + TABLE
 
 app.get('/', function(req, res)
 {  
@@ -92,8 +92,48 @@ app.get('/moves', function(req, res)
 
             res.render('moves', {data: rows});                  // Render the index.hbs file, and also send the renderer
         })                                                      // an object where 'data' is equal to the 'rows' we
-    });                                               // received back from the query
+});                                               // received back from the query
 
+
+app.get('/pokemon', function(req, res)
+{  
+        let query1;               // Define our query
+        
+        if (req.query.pokemonName === undefined)
+        {
+            query1 = "SELECT * FROM Pokemon;";
+        }
+        // If there is a query string, we assume this is a search, and return desired results
+        else
+        {
+            query1 = `SELECT * FROM Pokemon WHERE pokemonName LIKE "${req.query.pokemonName}%"`
+        }
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+
+            res.render('pokemon', {data: rows});                  // Render the index.hbs file, and also send the renderer
+        })                                                      // an object where 'data' is equal to the 'rows' we
+});                                               // received back from the query
+
+app.get('/movesets', function(req, res)
+{  
+        let query1;               // Define our query
+        
+        if (req.query.moveSetID === undefined)
+        {
+            query1 = "SELECT * FROM PokemonMoveSet;";
+        }
+        // If there is a query string, we assume this is a search, and return desired results
+        else
+        {
+            query1 = `SELECT * FROM PokemonMoveSet WHERE moveSetID LIKE "${req.query.moveSetID}%"`
+        }
+
+        db.pool.query(query1, function(error, rows, fields){    // Execute the query
+
+            res.render('movesets', {data: rows});                  // Render the index.hbs file, and also send the renderer
+        })                                                      // an object where 'data' is equal to the 'rows' we
+});                                               // received back from the query
 
 // app.js - ROUTES section
 
