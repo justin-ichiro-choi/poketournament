@@ -32,10 +32,10 @@ addMatchForm.addEventListener("submit", function (e) {
             addRowToTable(xhttp.response);
 
             // Clear the input fields for another transaction
-            inputTrainerName.value = '';
-            inputTrainerEmail.value = '';
-            inputTrainerPhone.value = '';
-            inputNumberOfWins.value = '';
+            document.getElementById("input-round-number").value = '';
+            document.getElementById("input-contestant-1").value = '';
+            document.getElementById("input-contestant-2").value = '';
+ 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
@@ -53,7 +53,7 @@ addMatchForm.addEventListener("submit", function (e) {
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("trainer-table");
+    let currentTable = document.getElementById("matches-table");
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -65,9 +65,10 @@ addRowToTable = (data) => {
     // Create a row and 4 cells
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
-    let trainerNameCell = document.createElement("TD");
-    let trainerPhoneCell = document.createElement("TD");
-    let trainerEmailCell = document.createElement("TD");
+    let roundNumberCell = document.createElement("TD");
+
+    let contestant1Cell = document.createElement("TD");
+    let contestant2Cell = document.createElement("TD");
 
     let deleteCell = document.createElement("TD");
 
@@ -75,10 +76,9 @@ addRowToTable = (data) => {
     // Fill the cells with correct data
     
     idCell.innerText = newRow.id;
-    trainerNameCell.innerText = newRow.name;
-    trainerPhoneCell.innerText = newRow.phoneNumber;
-    trainerEmailCell.innerText = newRow.email;
-    trainerNumberOfWinsCell.innerText = newRow.numberOfWins;
+    roundNumberCell.innerText = newRow.roundNumber;
+    contestant1Cell.innerText = newRow.contestant1;
+    contestant2Cell.innerText = newRow.contestant2;
 
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
@@ -88,10 +88,9 @@ addRowToTable = (data) => {
 
     // Add the cells to the row 
     row.appendChild(idCell);
-    row.appendChild(trainerNameCell);
-    row.appendChild(trainerPhoneCell);
-    row.appendChild(trainerEmailCell);
-    row.appendChild(trainerNumberOfWinsCell);
+    row.appendChild(roundNumberCell);
+    row.appendChild(contestant1Cell);
+    row.appendChild(contestant2Cell);
 
     row.appendChild(deleteCell);
 
@@ -101,6 +100,7 @@ addRowToTable = (data) => {
     
     // Add the row to the table
     currentTable.appendChild(row);
+    location.reload();
 
     let selectMenu = document.getElementById("mySelect");
     let option = document.createElement("option");
@@ -108,4 +108,6 @@ addRowToTable = (data) => {
     option.value = newRow.id;
     selectMenu.add(option);
     // End of new step 8 code.
+
+    location.reload();
 }

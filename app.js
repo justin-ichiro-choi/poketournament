@@ -233,6 +233,36 @@ app.delete('/delete-trainer-ajax/', function(req,res,next){
             }
   })});
 
+app.delete('/delete-match-ajax/', function(req,res,next){
+  let data = req.body;
+  let matchID = parseInt(data.id);
+  let match_Cert_Delete = `DELETE FROM Matches WHERE matchID = ?`;
+
+  db.pool.query(match_Cert_Delete, [matchID], function(error, rows, fields) {
+
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.sendStatus(204);
+        }
+})});
+
+app.delete('/delete-move-ajax/', function(req,res,next){
+    let data = req.body;
+    let moveID = parseInt(data.id);
+    let move_Cert_Delete = `DELETE FROM Moves WHERE moveID = ?`;
+  
+    db.pool.query(move_Cert_Delete, [moveID], function(error, rows, fields) {
+  
+          if (error) {
+              console.log(error);
+              res.sendStatus(400);
+          } else {
+              res.sendStatus(204);
+          }
+  })});
+
 app.put('/put-trainer-ajax', function(req,res,next){
     let data = req.body;
 
