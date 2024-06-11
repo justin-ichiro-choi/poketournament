@@ -83,7 +83,7 @@
 
     <label for="input-move-id-">Match ID: </label>
     <select name="input-match-id-2" id="mySelect">
-        <option value="test">Select a Move Name To Update</option>
+        <option value="test">Select a Move To Update</option>
         {{#each data}}
         <option value="{{this.moveID}}">{{this.moveName}}</option>
         {{/each}}
@@ -92,11 +92,14 @@
     <label for="input-edit-move-name">Move Name: </label>
     <input type="text" name="input-edit-move-name" id="input-edit-move-name">
 
-    <label for="input-edit-move-name">Move Name: </label>
-    <input type="text" name="input-edit-move-name" id="input-edit-move-name">
+    <label for="input-edit-move-description">Move Description: </label>
+    <input type="text" name="input-edit-move-description" id="input-edit-move-description">
 
-    <label for="input-edit-move-name">Move Name: </label>
-    <input type="text" name="input-edit-move-name" id="input-edit-move-name">
+    <label for="input-edit-move-power">Move Power: </label>
+    <input type="number" name="input-edit-move-power" id="input-edit-move-power">
+    
+    <label for="input-edit-move-type">Move Power: </label>
+    <input type="text" name="input-edit-move-type" id="input-edit-move-type">
 
 
     <input type="submit">

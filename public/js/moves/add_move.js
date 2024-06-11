@@ -57,7 +57,7 @@ addMatchForm.addEventListener("submit", function (e) {
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("matches-table");
+    let currentTable = document.getElementById("moves-table");
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -82,22 +82,23 @@ addRowToTable = (data) => {
     // Fill the cells with correct data
     
     idCell.innerText = newRow.id;
-    moveNameCell.innerText = newRow.roundNumber;
-    moveDescriptionCell.innerText = newRow.contestant1;
-    movePowerCell.innerText = newRow.contestant2;
-    moveTypeCell.innerText = 
+    moveNameCell.innerText = newRow.moveName;
+    moveDescriptionCell.innerText = newRow.moveDescription;
+    movePowerCell.innerText = newRow.movePower;
+    moveTypeCell.innerText = newRow.typeOfMove;
 
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function(){
-        deleteTrainer(newRow.id);
+        deleteMove(newRow.id);
     };
 
     // Add the cells to the row 
     row.appendChild(idCell);
-    row.appendChild(roundNumberCell);
-    row.appendChild(contestant1Cell);
-    row.appendChild(contestant2Cell);
+    row.appendChild(moveNameCell);
+    row.appendChild(moveDescriptionCell);
+    row.appendChild(movePowerCell);
+    row.appendChild(moveTypeCell);
 
     row.appendChild(deleteCell);
 
