@@ -379,6 +379,52 @@ app.put('/put-match-ajax', function(req,res,next){
                   })
               }
   })});
+
+app.put('/put-move-ajax', function(req,res,next){
+    let data = req.body;
+
+    let moveID = parseInt(data.moveID);
+
+
+    let moveName = (data.moveName);
+    let moveDescription = (data.moveDescription);
+    let movePower = parseInt(data.movePower);
+    let moveType = (data.moveType);
+
+
+
+
+    let moveQuery = `UPDATE Moves SET moveName = ?, moveDescription = ?, movePower = ?, typeOfMove = ? WHERE moveID = ?;`;
+    let query2 = `SELECT * FROM Moves;`;
+
+    // Run the 1st query
+    db.pool.query(moveQuery, [moveName, moveDescription, movePower, moveType, moveID], function(error, rows, fields){
+        if (error) {
+
+        // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+        console.log(error);
+        res.sendStatus(400);
+
+        } else {
+
+            db.pool.query(query2, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    res.send(rows);
+                }
+            })   
+        }
+        console.log('test')
+})});
 /*
     LISTENER
 */
