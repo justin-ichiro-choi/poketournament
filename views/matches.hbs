@@ -16,11 +16,22 @@
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
         <tr>
-            {{#each data.[0]}}
             <th>
-                {{@key}}
+                Match ID
             </th>
-            {{/each}}
+
+            <th>
+                Round Number
+            </th>
+
+            <th>
+                Trainer 1
+            </th>
+
+            <th>
+                Trainer 2
+            </th>
+
             <th>Delete</th>
 
         </tr>
@@ -33,7 +44,7 @@
         {{#each data}}
         <tr>
             <td>{{this.matchID}}</td>
-            <td>{{this.roundNumber}}</td>
+            <td>Round {{this.roundNumber}}</td>
             <td>{{this.trainer1}}</td>
             <td>{{this.trainer2}}</td>
 
@@ -82,9 +93,9 @@
 
     <label for="input-match-id-2">Match ID: </label>
     <select name="input-match-id-2" id="mySelect">
-        <option value="test">Select a Match ID</option>
+        <option value="test">Select a Match</option>
         {{#each data}}
-        <option value="{{this.matchID}}">{{this.matchID}}</option>
+        <option value="{{this.matchID}}">{{this.trainer1}} VS {{this.trainer2}}</option>
         {{/each}}
     </select>
 

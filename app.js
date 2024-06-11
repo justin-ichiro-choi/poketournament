@@ -348,14 +348,17 @@ app.put('/put-trainer-ajax', function(req,res,next){
 app.put('/put-match-ajax', function(req,res,next){
     let data = req.body;
   
-    let homeworld = parseInt(data.homeworld);
-    let person = parseInt(data.fullname);
+    let matchID = parseInt(data.matchID);
+    let matchRoundNumber = parseInt(data.matchRoundNumber);
+    let contestant1 = parseInt(data.contestant1);
+    let contestant2 = parseInt(data.contestant2);
+
   
-    let queryUpdateWorld = `UPDATE bsg_people SET homeworld = ? WHERE bsg_people.id = ?`;
-    let selectWorld = `SELECT * FROM bsg_planets WHERE id = ?`
+    let updateQuery = `UPDATE Matches SET roundNumber = ?, contestant1 = ?, contestant2 = ? WHERE matchID = ?`;
+    let sendQuery = `SELECT * FROM Matches WHERE matchID = ?`
   
           // Run the 1st query
-          db.pool.query(queryUpdateWorld, [homeworld, person], function(error, rows, fields){
+          db.pool.query(updateQuery, [matchRoundNumber, contestant1, contestant2, matchID], function(error, rows, fields){
               if (error) {
   
               // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
@@ -368,7 +371,7 @@ app.put('/put-match-ajax', function(req,res,next){
               else
               {
                   // Run the second query
-                  db.pool.query(selectWorld, [homeworld], function(error, rows, fields) {
+                  db.pool.query(sendQuery, [matchID], function(error, rows, fields) {
   
                       if (error) {
                           console.log(error);
