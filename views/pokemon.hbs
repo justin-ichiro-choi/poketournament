@@ -1,3 +1,6 @@
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <header>
     <h1>Enter your moves here!</h1>
 </header>
@@ -25,7 +28,7 @@
             <th>Held Item</th>
             <th>Trainer</th>
             <th>Moveset</th>
-
+            
             <th>Delete</th>
         </tr>
     </thead>
@@ -42,7 +45,8 @@
             <td>{{this.primaryType}}</td>
             <td>{{#if this.secondaryType}}{{this.secondaryType}}{{else}}N/A{{/if}}</td>
             <td>{{#if this.heldItem}}{{this.heldItem}}{{else}}Empty{{/if}}</td>
-            <td>{{this.trainerID}}</td>
+            <td>{{this.trainerName}}</td>
+
             <td>{{this.movesetID}}</td>
 
 
@@ -52,4 +56,36 @@
         {{/each}}
     </tbody>
 </table>
-<script src="./js/delete_pokemon.js"></script>
+<script src="./js/pokemon/delete_pokemon.js"></script>
+
+{{!-- Form to add a record to the table  --}}
+<p>To add a new pokemon, please enter their information below and click 'Submit'!</p>
+<form id="add-pokemon-form-ajax">
+    <label for="input-pokemon-name">Pokemon Name: </label>
+    <input type="text" name="input-pokemon-name" id="input-pokemon-name">
+
+    <label for="input-pokemon-level">Pokemon Level: </label>
+    <input type="number" name="input-pokemon-level" id="input-pokemon-level">
+    
+    <label for="input-pokemon-primary-type">Primary Type: </label>
+    <input type="text" name="input-pokemon-primary-type" id="input-pokemon-primary-type">
+
+    <label for="input-pokemon-secondary-type">Secondary Type: </label>
+    <input type="text" name="input-pokemon-secondary-type" id="input-pokemon-secondary-type">
+
+    <label for="input-pokemon-held-item">Held Item: </label>
+    <input type="text" name="input-pokemon-type" id="input-pokemon-type">
+
+    <label for="input-pokemon-trainer">Trainer Name: </label>
+    <select name="input-pokemon-trainer" id="input-pokemon-trainer">
+        <option value="test">Select Another Trainer</option>
+        {{#each trainers}}
+        <option value="{{this.trainerID}}">{{this.trainerName}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-pokemon-moveset">Pokemon Moveset: </label>
+    <input type="number" name="input-pokemon-moveset" id="input-pokemon-moveset">
+    <input type="submit">
+</form>
+<script src="./js/pokemon/add_pokemon.js"></script>

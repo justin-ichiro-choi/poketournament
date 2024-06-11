@@ -67,7 +67,7 @@ app.get('/matches', function(req, res)
             return res.render('matches', {data: matches, trainer: trainerNames});
         })
     })
-});                                               // MACHES PAGE + TABLE
+});                                               // MATCHES PAGE + TABLE
 
 app.get('/', function(req, res)
 {  
@@ -103,9 +103,8 @@ app.get('/pokemon', function(req, res)
     // If there is no query string, we just perform a basic SELECT
     if (req.query.pokemonID === undefined)
     {
-        query1 = "SELECT * FROM Pokemon;";
+        query1 = "SELECT p.*, t.trainerName, m.* FROM Pokemon p LEFT JOIN Trainers t on p.trainerID = t.trainerID LEFT JOIN PokemonMoveSet m on p.movesetID = m.moveSetID";
     }
-
     // If there is a query string, we assume this is a search, and return desired results
     else
     {
@@ -124,28 +123,13 @@ app.get('/pokemon', function(req, res)
         // Run the second query
         db.pool.query(query2, (error, rows, fields) => {
             
-            // Save the planets
             let trainers = rows;
 
-            let trainerMap = {}
-
-            trainers.map(trainer => {
-                let id = parseInt(trainer.trainerID, 10);
-
-                trainerMap[id] = planet["name"];
-            })
-
-            // Overwrite the homeworld ID with the name of the planet in the people object
-            people = people.map(person => {
-                return Object.assign(person, {homeworld: planetmap[person.homeworld]})
-            })
-
-            // END OF NEW CODE
-
-            return res.render('index', {data: pokemon, planets: planets});
+            return res.render('pokemon', {data: pokemon, trainers: trainers});
         })
     })
 });
+
 app.get('/movesets', function(req, res)
 {  
     let query1;               // Define our query
@@ -284,6 +268,43 @@ app.post('/add-move-form-ajax', function(req, res)
     })
 });
 
+app.post('/add-pokemon-form-ajax', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Pokemon (trainerName, trainerPhone, trainerEmail, numberOfWins) VALUES ('${data.name}', '${data.phoneNumber}', '${data.email}', ${data.numberOfWins})`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+            // If there was no error, perform a SELECT * on bsg_people
+            query2 = `SELECT * FROM Pokemon;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
 
 app.delete('/delete-trainer-ajax/', function(req,res,next){
     let data = req.body;
@@ -335,6 +356,23 @@ app.delete('/delete-move-ajax/', function(req,res,next){
           }
   })});
 
+
+app.delete('/delete-pokemon-ajax/', function(req,res,next){
+    let data = req.body;
+    let pokemonID = parseInt(data.id);
+    let pokemon_Cert_Delete = `DELETE FROM Pokemon WHERE pokemonID = ?`;
+
+    db.pool.query(pokemon_Cert_Delete, [pokemonID], function(error, rows, fields) {
+
+            if (error) {
+                console.log(error);
+                res.sendStatus(400);
+            } else {
+                res.sendStatus(204);
+                console.log('Success')
+            }
+})});
+
 app.put('/put-trainer-ajax', function(req,res,next){
     let data = req.body;
 
@@ -376,6 +414,7 @@ app.put('/put-trainer-ajax', function(req,res,next){
         console.log('test')
 })});
 
+
 app.put('/put-match-ajax', function(req,res,next){
     let data = req.body;
   
@@ -415,7 +454,8 @@ app.put('/put-match-ajax', function(req,res,next){
   })});
 
   
-app.put('/put-move-ajax', function(req,res,next){
+
+  app.put('/put-move-ajax', function(req,res,next){
     let data = req.body;
 
     let moveID = parseInt(data.moveID);
@@ -460,6 +500,7 @@ app.put('/put-move-ajax', function(req,res,next){
         }
         console.log('test')
 })});
+
 /*
     LISTENER
 */
