@@ -14,13 +14,19 @@
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the page renders --}}
         <tr>
-            {{#each data.[0]}}
             <th>
-                {{@key}}
+                ID
             </th>
-            {{/each}}
-            <th>Delete</th>
 
+            <th>Name</th>
+            <th>Level</th>
+            <th>Primary Type</th>
+            <th>Secondary Type</th>
+            <th>Held Item</th>
+            <th>Trainer</th>
+            <th>Moveset</th>
+
+            <th>Delete</th>
         </tr>
     </thead>
 
@@ -34,8 +40,8 @@
             <td>{{this.pokemonName}}</td>
             <td>{{this.pokemonLevel}}</td>
             <td>{{this.primaryType}}</td>
-            <td>{{this.secondaryType}}</td>
-            <td>{{this.heldItem}}</td>
+            <td>{{#if this.secondaryType}}{{this.secondaryType}}{{else}}N/A{{/if}}</td>
+            <td>{{#if this.heldItem}}{{this.heldItem}}{{else}}Empty{{/if}}</td>
             <td>{{this.trainerID}}</td>
             <td>{{this.movesetID}}</td>
 

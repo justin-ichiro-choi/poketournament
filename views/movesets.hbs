@@ -11,7 +11,7 @@
 
 <p>Search by move name using the field below. Partial names are ok as well!</p>
 <form id="search-moveset-html" method='GET' action='/'>
-    <label for="input-moveset">Search by Trainer Name: </label>
+    <label for="input-moveset">Search by Moveset Name: </label>
     <input type="text" name="moveName" id="input-trainer-html-search">
     
     <input type="submit">
@@ -29,7 +29,7 @@
         <tr>
             {{#each data.[0]}}
             <th>
-                {{moveName}}
+                {{@key}}
             </th>
             {{/each}}
             <th>Delete</th>

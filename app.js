@@ -62,7 +62,7 @@ app.get('/matches', function(req, res)
         
         db.pool.query(query2, (error, rows, fields) => {
             
-            // Save the planets
+            // Save trainer rows in addition for referring in data form 
             let trainerNames = rows;
             return res.render('matches', {data: matches, trainer: trainerNames});
         })
@@ -96,37 +96,68 @@ app.get('/moves', function(req, res)
 
 
 app.get('/pokemon', function(req, res)
-{  
-    let query1;               // Define our query
-    
-    if (req.query.pokemonName === undefined)
+{
+    // Declare Query 1
+    let query1;
+
+    // If there is no query string, we just perform a basic SELECT
+    if (req.query.pokemonID === undefined)
     {
         query1 = "SELECT * FROM Pokemon;";
     }
+
     // If there is a query string, we assume this is a search, and return desired results
     else
     {
         query1 = `SELECT * FROM Pokemon WHERE pokemonName LIKE "${req.query.pokemonName}%"`
     }
 
-    db.pool.query(query1, function(error, rows, fields){    // Execute the query
+    // Query 2 is the same in both cases
+    let query2 = "SELECT * FROM Trainers;";
 
-        res.render('pokemon', {data: rows});                  // Render the index.hbs file, and also send the renderer
-    })                                                      // an object where 'data' is equal to the 'rows' we
-});                                               // received back from the query
+    // Run the 1st query
+    db.pool.query(query1, function(error, rows, fields){
+        
+        // Save the Pokemon
+        let pokemon = rows;
+        
+        // Run the second query
+        db.pool.query(query2, (error, rows, fields) => {
+            
+            // Save the planets
+            let trainers = rows;
 
+            let trainerMap = {}
+
+            trainers.map(trainer => {
+                let id = parseInt(trainer.trainerID, 10);
+
+                trainerMap[id] = planet["name"];
+            })
+
+            // Overwrite the homeworld ID with the name of the planet in the people object
+            people = people.map(person => {
+                return Object.assign(person, {homeworld: planetmap[person.homeworld]})
+            })
+
+            // END OF NEW CODE
+
+            return res.render('index', {data: pokemon, planets: planets});
+        })
+    })
+});
 app.get('/movesets', function(req, res)
 {  
     let query1;               // Define our query
     
-    if (req.query.moveSetID === undefined)
+    if (req.query.match === undefined)
     {
-        query1 = "SELECT * FROM PokemonMoveSet;";
+        query1 = "SELECT * FROM PokemonMoveSet AS moveset "
     }
     // If there is a query string, we assume this is a search, and return desired results
     else
     {
-        query1 = `SELECT * FROM PokemonMoveSet WHERE moveSetID LIKE "${req.query.moveSetID}%"`
+        query1 = `SELECT * FROM Matches WHERE matchID LIKE "${req.query.trainerName}%"`
     }
 
     db.pool.query(query1, function(error, rows, fields){    // Execute the query
@@ -383,6 +414,7 @@ app.put('/put-match-ajax', function(req,res,next){
               }
   })});
 
+  
 app.put('/put-move-ajax', function(req,res,next){
     let data = req.body;
 
