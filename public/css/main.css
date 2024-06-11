@@ -151,7 +151,7 @@
   tfoot {}
   tr {}
     tr:nth-child(even) {}
-  th {}
+  th {background-color:azure;}
   td {}
     td:nth-child(1) {}
   colgroup {}

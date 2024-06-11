@@ -61,6 +61,8 @@
 {{!-- Form to add a record to the table  --}}
 <p>To add a new pokemon, please enter their information below and click 'Submit'!</p>
 <form id="add-pokemon-form-ajax">
+
+
     <label for="input-pokemon-name">Pokemon Name: </label>
     <input type="text" name="input-pokemon-name" id="input-pokemon-name">
 
@@ -68,13 +70,13 @@
     <input type="number" name="input-pokemon-level" id="input-pokemon-level">
     
     <label for="input-pokemon-primary-type">Primary Type: </label>
-    <input type="text" name="input-pokemon-primary-type" id="input-pokemon-primary-type">
+    <input type="text" name="input-primary-type" id="input-primary-type">
 
     <label for="input-pokemon-secondary-type">Secondary Type: </label>
-    <input type="text" name="input-pokemon-secondary-type" id="input-pokemon-secondary-type">
+    <input type="text" name="input-secondary-type" id="input-secondary-type">
 
     <label for="input-pokemon-held-item">Held Item: </label>
-    <input type="text" name="input-pokemon-type" id="input-pokemon-type">
+    <input type="text" name="input-held-item" id="input-held-item">
 
     <label for="input-pokemon-trainer">Trainer Name: </label>
     <select name="input-pokemon-trainer" id="input-pokemon-trainer">
@@ -89,3 +91,13 @@
     <input type="submit">
 </form>
 <script src="./js/pokemon/add_pokemon.js"></script>
+
+
+
+    <label for="input-pokemon-id">Pokemon to Adjust: </label>
+    <select name="input-pokemon-id" id="input-pokemon-id">
+        <option value="test">Select a Pokemon</option>
+        {{#each data}}
+        <option value="{{this.pokemonID}}">{{this.trainerName}}'s Level {{this.pokemonLevel}} {{this.pokemonName}}</option>
+        {{/each}}
+    </select>

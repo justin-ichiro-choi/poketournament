@@ -273,7 +273,7 @@ app.post('/add-pokemon-form-ajax', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
     // Create the query and run it on the database
-    query1 = `INSERT INTO Pokemon (trainerName, trainerPhone, trainerEmail, numberOfWins) VALUES ('${data.name}', '${data.phoneNumber}', '${data.email}', ${data.numberOfWins})`;
+    query1 = `INSERT INTO Pokemon (pokemonName, pokemonLevel, primaryType, secondaryType, heldItem, trainerID, movesetID) VALUES ('${data.pokemonName}', '${data.pokemonLevel}', '${data.primaryType}', '${data.secondaryType}', '${data.heldItem}', ${data.trainerID}, ${data.movesetID})`;
     db.pool.query(query1, function(error, rows, fields){
 
         // Check to see if there was an error

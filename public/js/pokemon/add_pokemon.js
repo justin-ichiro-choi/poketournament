@@ -13,14 +13,17 @@ addPokemonForm.addEventListener("submit", function(e) {
     let primaryType = document.getElementById("input-primary-type").value;
     let secondaryType = document.getElementById("input-secondary-type").value;
     let heldItem = document.getElementById("input-held-item").value;
-
+    let trainerID = document.getElementById("input-pokemon-trainer").value;
+    let movesetID = document.getElementById("input-pokemon-moveset").value;
     //Put data in javascript object
     let data = {
-        pokemonName: pokemonNameValue,
-        pokemonLevel: pokemonLevelValue,
-        primaryType: primaryTypeValue,
-        secondaryType: secondaryTypeValue,
-        heldItem: heldItemValue
+        pokemonName: pokemonName,
+        pokemonLevel: pokemonLevel,
+        primaryType: primaryType,
+        secondaryType: secondaryType,
+        heldItem: heldItem,
+        trainerID: trainerID,
+        movesetID: movesetID
     }
 
     //Setup AJAX request
@@ -41,6 +44,9 @@ addPokemonForm.addEventListener("submit", function(e) {
             document.getElementById("input-primary-type").value = '';
             document.getElementById("input-secondary-type").value = '';
             document.getElementById("input-held-item").value = '';
+            document.getElementById("input-pokemon-trainer").value = '';
+            document.getElementById("input-pokemon-moveset").value = '';
+
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input")
@@ -72,6 +78,9 @@ addRowToTable = (data) => {
     let primaryTypeCell = document.createElement("TD");
     let secondaryTypeCell = document.createElement("TD");
     let heldItemCell = document.createElement("TD");
+    let trainerIDCell = document.createElement("TD");
+    let movesetIDCell = document.createElement("TD");
+
 
     let deleteCell = document.createElement("TD");
 
@@ -82,6 +91,8 @@ addRowToTable = (data) => {
     primaryTypeCell.innerText = newRow.primaryType;
     secondaryTypeCell.innerText = newRow.secondaryType;
     heldItemCell.innerText = newRow.heldItem;
+    trainerIDCell.innerText = newRow.trainerID;
+    movesetIDCell.innerText = newRow.movesetID;
 
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
@@ -96,6 +107,9 @@ addRowToTable = (data) => {
     row.appendChild(primaryTypeCell);
     row.appendChild(secondaryTypeCell);
     row.appendChild(heldItemCell);
+    row.appendChild(trainerIDCell);
+    row.appendChild(movesetIDCell);
+
 
     row.appendChild(deleteCell);
 
