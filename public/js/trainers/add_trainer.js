@@ -51,7 +51,6 @@ addTrainerForm.addEventListener("submit", function (e) {
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-    location.reload();
 })
 
 
@@ -107,7 +106,8 @@ addRowToTable = (data) => {
     // Add a row attribute so the deleteRow function can find a newly added row
     row.setAttribute('data-value', newRow.id);
 
-    
+    location.reload();
+
     // Add the row to the table
     currentTable.appendChild(row);
 

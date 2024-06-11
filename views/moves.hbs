@@ -55,4 +55,51 @@
         {{/each}}
     </tbody>
 </table>
-<script src="./js/delete_move.js"></script>
+<script src="./js/moves/delete_move.js"></script>
+
+{{!-- Form to add a record to the table  --}}
+<p>To add a new move, please enter their information below and click 'Submit'!</p>
+<form id="add-move-form-ajax">
+    <label for="input-move-name">Move Name: </label>
+    <input type="text" name="input-move-name" id="input-move-name">
+
+    <label for="input-move-description">Move Description: </label>
+    <input type="text" name="input-move-description" id="input-move-description">
+    
+    <label for="input-move-power">Move Power: </label>
+    <input type="number" name="input-move-power" id="input-move-power">
+
+    <label for="input-move-type">Move Type: </label>
+    <input type="text" name="input-move-type" id="input-move-type">
+
+    <input type="submit">
+</form>
+<script src="./js/moves/add_move.js"></script>
+
+<h2>Updating Move Information</h2>
+<p>Select MoveID below and adjust the match information!</p>
+
+<form id="update-move-form-ajax">
+
+    <label for="input-move-id-">Match ID: </label>
+    <select name="input-match-id-2" id="mySelect">
+        <option value="test">Select a Move Name To Update</option>
+        {{#each data}}
+        <option value="{{this.moveID}}">{{this.moveName}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-edit-move-name">Move Name: </label>
+    <input type="text" name="input-edit-move-name" id="input-edit-move-name">
+
+    <label for="input-edit-move-name">Move Name: </label>
+    <input type="text" name="input-edit-move-name" id="input-edit-move-name">
+
+    <label for="input-edit-move-name">Move Name: </label>
+    <input type="text" name="input-edit-move-name" id="input-edit-move-name">
+
+
+    <input type="submit">
+
+</form>
+<script src="./js/moves/update_move.js"></script>

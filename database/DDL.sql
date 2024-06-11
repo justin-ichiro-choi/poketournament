@@ -1,4 +1,3 @@
-
 -- Trainers
 -- trainerID: int, not NULL, PK, auto_increment, 
 -- trainerName: varchar, not NULL
@@ -17,30 +16,6 @@ CREATE OR REPLACE TABLE Trainers (
     PRIMARY KEY (trainerID)
 );
 
--- Pokémon
--- pokemonID: (PK, autoincrement)
--- pokemonName: varchar(30), not NULL
--- pokemonLevel: int, not NULL
--- primaryType: varchar(12), not NULL, Foreign Key: (Example: Fire, Dark)
--- secondaryType: varchar(12) (Example: Fire, Dark)
--- heldItem: varchar(17)
--- trainerID: Foreign Key
--- movesetID: Foreign Key
--- Relationship: Many to One: Many Pokemon can be associated with Trainer: Foreign Key: trainerID
-CREATE OR REPLACE TABLE Pokemon (
-    pokemonID INT(12) NOT NULL AUTO_INCREMENT,
-    pokemonName VARCHAR(30) NOT NULL,
-    pokemonLevel INT NOT NULL,
-    primaryType VARCHAR(12) NOT NULL,
-    secondaryType VARCHAR(12),
-    heldItem VARCHAR(17),
-    trainerID INT,
-    movesetID INT,
-    PRIMARY KEY (pokemonID),
-    FOREIGN KEY (trainerID) REFERENCES Trainers(trainerID),
-    FOREIGN KEY (movesetID) REFERENCES PokemonMoveSet(moveSetID)
-);
-
 -- Matches
 -- matchID: (int, autoincrement, not null) - Primary Key
 -- roundNumber(int, not null)
@@ -48,12 +23,11 @@ CREATE OR REPLACE TABLE Pokemon (
 -- contestant2: Foreign Key - trainerID
 -- Relationship: a One to Many relationship between Matches and Trainers is implemented.
 --		Each individual trainer can take part in multiple matches as part of the tournament. 
-
 CREATE OR REPLACE TABLE Matches (
     matchID INT(12) NOT NULL AUTO_INCREMENT,
     roundNumber INT(4) NOT NULL,
-    contestant1 INT,
-    contestant2 INT,
+    contestant1 INT(12),
+    contestant2 INT(12),
     PRIMARY KEY (matchID),
     FOREIGN KEY (contestant1) REFERENCES Trainers(trainerID),
     FOREIGN KEY (contestant2) REFERENCES Trainers(trainerID)
@@ -75,6 +49,30 @@ CREATE OR REPLACE TABLE Moves (
     PRIMARY KEY (moveID)
 );
 
+-- Pokémon
+-- pokemonID: (PK, autoincrement)
+-- pokemonName: varchar(30), not NULL
+-- pokemonLevel: int, not NULL
+-- primaryType: varchar(12), not NULL, Foreign Key: (Example: Fire, Dark)
+-- secondaryType: varchar(12) (Example: Fire, Dark)
+-- heldItem: varchar(17)
+-- trainerID: Foreign Key
+-- movesetID: Foreign Key
+-- Relationship: Many to One: Many Pokemon can be associated with Trainer: Foreign Key: trainerID
+CREATE OR REPLACE TABLE Pokemon (
+    pokemonID INT(12) NOT NULL AUTO_INCREMENT,
+    pokemonName VARCHAR(30) NOT NULL,
+    pokemonLevel INT NOT NULL,
+    primaryType VARCHAR(12) NOT NULL,
+    secondaryType VARCHAR(12),
+    heldItem VARCHAR(17),
+    trainerID INT(12),
+    movesetID INT(12) NOT NULL,
+    PRIMARY KEY (pokemonID),
+    FOREIGN KEY (trainerID) REFERENCES Trainers(trainerID)
+);
+
+
 -- Moveset
 -- pokemonID: Foreign Key
 -- moveSetID: Primary Key
@@ -85,17 +83,22 @@ CREATE OR REPLACE TABLE Moves (
 CREATE OR REPLACE TABLE PokemonMoveSet (
     pokemonID INT(12),
     moveSetID INT(12) NOT NULL AUTO_INCREMENT,
-    moveOne INT NOT NULL,
-    moveTwo INT NOT NULL,
-    moveThree INT NOT NULL,
-    moveFour INT NOT NULL,
+    moveOne INT(12),
+    moveTwo INT(12),
+    moveThree INT(12),
+    moveFour INT(12),
     PRIMARY KEY (moveSetID),
-    FOREIGN KEY (pokemonID) REFERENCES Pokemon(pokemonID) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (moveOne) REFERENCES Moves(moveID) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (moveTwo) REFERENCES Moves(moveID) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (moveThree) REFERENCES Moves(moveID) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (moveFour) REFERENCES Moves(moveID) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (pokemonID) REFERENCES Pokemon(pokemonID) ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (moveOne) REFERENCES Moves(moveID) ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (moveTwo) REFERENCES Moves(moveID) ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (moveThree) REFERENCES Moves(moveID) ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (moveFour) REFERENCES Moves(moveID) ON UPDATE CASCADE ON DELETE SET NULL
 );
+
+ALTER TABLE Pokemon
+    ADD CONSTRAINT moveset_contraint_pokemon
+        FOREIGN KEY (movesetID) REFERENCES PokemonMoveSet(moveSetID) ON UPDATE CASCADE ON DELETE SET NULL;
+
 
 -- Insert into Trainers table
 INSERT INTO Trainers (trainerName, trainerPhone, trainerEmail, NumberOfWins) 

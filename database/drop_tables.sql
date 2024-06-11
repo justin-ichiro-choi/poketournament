@@ -1,0 +1,13 @@
+SET FOREIGN_KEY_CHECKS=0;
+
+DROP TABLE Trainers;
+DROP TABLE Pokemon;
+DROP TABLE Matches;
+
+DROP TABLE Moves;
+
+DROP TABLE PokemonMoveSet;
+
+
+
+SET FOREIGN_KEY_CHECKS=1;
