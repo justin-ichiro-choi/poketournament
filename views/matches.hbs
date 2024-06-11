@@ -55,7 +55,7 @@
 
     <label for="input-contestant-1">Match ID Name: </label>
     <select name="input-contestant-1" id="input-contestant-1">
-        <option value="test">Select a Match ID</option>
+        <option value="test">Select a Trainer</option>
         {{#each trainer}}
         <option value="{{this.trainerID}}">{{this.trainerName}}</option>
         {{/each}}
@@ -63,7 +63,7 @@
 
     <label for="input-contestant-2">Trainer Name: </label>
     <select name="input-contestant-2" id="input-contestant-2">
-        <option value="test">Select a Trainer</option>
+        <option value="test">Select Another Trainer</option>
         {{#each trainer}}
         <option value="{{this.trainerID}}">{{this.trainerName}}</option>
         {{/each}}
@@ -74,3 +74,40 @@
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
 <script src="./js/add_match.js"></script>
+
+<h2>Updating Match Information</h2>
+<p>Select Match ID below and adjust the match information!</p>
+
+<form id="update-match-form-ajax">
+
+    <label for="input-match-id-2">Match ID: </label>
+    <select name="input-match-id-2" id="mySelect">
+        <option value="test">Select a Match ID</option>
+        {{#each data}}
+        <option value="{{this.matchID}}">{{this.matchID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-match-round-number">Number Of Wins: </label>
+    <input type="number" name="input-match-round-number" id="input-match-round-number">
+
+    <label for="input-edit-contestant-1">Match ID Name: </label>
+    <select name="input-edit-contestant-1" id="input-edit-contestant-1">
+        <option value="test">Select a Trainer</option>
+        {{#each trainer}}
+        <option value="{{this.trainerID}}">{{this.trainerName}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-edit-contestant-2">Trainer Name: </label>
+    <select name="input-edit-contestant-2" id="input-edit-contestant-2">
+        <option value="test">Select Another Trainer</option>
+        {{#each trainer}}
+        <option value="{{this.trainerID}}">{{this.trainerName}}</option>
+        {{/each}}
+    </select>
+
+    <input type="submit">
+
+</form>
+<script src="./js/update_trainer.js"></script>
