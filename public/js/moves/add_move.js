@@ -1,8 +1,8 @@
 // Get the objects we need to modify
-let addMatchForm = document.getElementById('add-match-form-ajax');
+let addMoveForm = document.getElementById('add-move-form-ajax');
 
 // Modify the objects we need
-addMatchForm.addEventListener("submit", function (e) {
+addMoveForm.addEventListener("submit", function (e) {
     
     // Prevent the form from submitting
     e.preventDefault();
@@ -11,7 +11,7 @@ addMatchForm.addEventListener("submit", function (e) {
     let moveName = document.getElementById("input-move-name").value;
     let moveDescription = document.getElementById("input-move-description").value;
     let movePower = document.getElementById("input-move-power").value;
-    let moveType = document.getElementById("input-move-type").value
+    let moveType = document.getElementById("input-move-type").value;
 
     // Put our data we want to send in a javascript object
     let data = {
